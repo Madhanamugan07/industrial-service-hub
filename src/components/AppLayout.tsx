@@ -8,22 +8,50 @@ import {
   Ticket,
   Menu,
   X,
+  LogOut,
+  Shield,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useAuth, type AppRole } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
 
-const navItems = [
-  { title: "Dashboard", path: "/", icon: LayoutDashboard },
-  { title: "Customers", path: "/customers", icon: Users },
-  { title: "Machines", path: "/machines", icon: Cog },
-  { title: "Warehouse", path: "/warehouse", icon: Warehouse },
-  { title: "Service Persons", path: "/service-persons", icon: UserCog },
-  { title: "Service Tickets", path: "/tickets", icon: Ticket },
-];
+type NavItem = { title: string; path: string; icon: typeof LayoutDashboard };
+
+function getNavItems(role: AppRole | null): NavItem[] {
+  const items: NavItem[] = [
+    { title: "Dashboard", path: "/", icon: LayoutDashboard },
+  ];
+
+  if (role === "admin") {
+    items.push(
+      { title: "Customers", path: "/customers", icon: Users },
+      { title: "Machines", path: "/machines", icon: Cog },
+      { title: "Warehouse", path: "/warehouse", icon: Warehouse },
+      { title: "Service Persons", path: "/service-persons", icon: UserCog },
+      { title: "Service Tickets", path: "/tickets", icon: Ticket },
+      { title: "User Management", path: "/users", icon: Shield }
+    );
+  } else if (role === "customer") {
+    items.push({ title: "My Tickets", path: "/tickets", icon: Ticket });
+  } else if (role === "service_person") {
+    items.push({ title: "Assigned Tickets", path: "/tickets", icon: Ticket });
+  }
+
+  return items;
+}
+
+const roleLabels: Record<string, string> = {
+  admin: "Admin",
+  customer: "Customer",
+  service_person: "Service Person",
+};
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { role, user, signOut } = useAuth();
+  const navItems = getNavItems(role);
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -62,7 +90,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         {/* Nav */}
         <nav className="flex-1 space-y-1 px-3 py-4">
           {navItems.map((item) => {
-            const isActive = location.pathname === item.path;
+            const isActive =
+              item.path === "/"
+                ? location.pathname === "/"
+                : location.pathname.startsWith(item.path);
             return (
               <Link
                 key={item.path}
@@ -82,11 +113,29 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           })}
         </nav>
 
-        {/* Footer */}
-        <div className="border-t border-sidebar-border px-5 py-4">
-          <p className="text-[10px] uppercase tracking-widest text-sidebar-foreground/40">
-            Industrial Maintenance v1.0
-          </p>
+        {/* Footer with user + logout */}
+        <div className="border-t border-sidebar-border px-4 py-4 space-y-3">
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-full bg-sidebar-primary/20 flex items-center justify-center">
+              <UserCog className="h-4 w-4 text-sidebar-primary" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-medium text-sidebar-accent-foreground truncate">
+                {user?.email}
+              </p>
+              <p className="text-[10px] uppercase tracking-wider text-sidebar-foreground/50">
+                {roleLabels[role || ""] || "User"}
+              </p>
+            </div>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="w-full justify-start text-sidebar-foreground/60 hover:text-sidebar-foreground hover:bg-sidebar-accent"
+            onClick={signOut}
+          >
+            <LogOut className="h-4 w-4 mr-2" /> Sign Out
+          </Button>
         </div>
       </aside>
 
@@ -102,10 +151,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </button>
           <div className="flex-1" />
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
-              <UserCog className="h-4 w-4 text-primary" />
-            </div>
-            <span className="text-sm font-medium hidden sm:inline">Admin</span>
+            <span className="text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-primary/10 text-primary">
+              {roleLabels[role || ""] || "User"}
+            </span>
           </div>
         </header>
 
