@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      customer_machines: {
+        Row: {
+          created_at: string
+          customer_id: string
+          id: string
+          machine_id: string
+          purchase_date: string | null
+        }
+        Insert: {
+          created_at?: string
+          customer_id: string
+          id?: string
+          machine_id: string
+          purchase_date?: string | null
+        }
+        Update: {
+          created_at?: string
+          customer_id?: string
+          id?: string
+          machine_id?: string
+          purchase_date?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_machines_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "customer_machines_machine_id_fkey"
+            columns: ["machine_id"]
+            isOneToOne: false
+            referencedRelation: "machines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       customers: {
         Row: {
           created_at: string

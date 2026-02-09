@@ -87,13 +87,24 @@ serve(async (req) => {
     // Create linked record based on role
     if (role === "customer") {
       const machineName = customer_details?.machine_name || "N/A";
-      const { error } = await adminClient.from("customers").insert({
+      const { data: customerData, error } = await adminClient.from("customers").insert({
         user_id: userId,
         name: full_name,
         machine_name: machineName,
         purchase_date: customer_details?.purchase_date || null,
-      });
+      }).select().single();
       if (error) throw error;
+
+      // Link selected machines to customer
+      if (customer_details?.machine_ids?.length > 0 && customerData) {
+        const links = customer_details.machine_ids.map((mid: string) => ({
+          customer_id: customerData.id,
+          machine_id: mid,
+          purchase_date: customer_details?.purchase_date || null,
+        }));
+        const { error: linkError } = await adminClient.from("customer_machines").insert(links);
+        if (linkError) throw linkError;
+      }
     } else if (role === "service_person") {
       const spId = service_person_details?.service_person_id;
       if (!spId) throw new Error("service_person_id is required for service persons");
