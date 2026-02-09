@@ -284,6 +284,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_sp_assigned_to_customer_ticket: {
+        Args: { _customer_user_id: string; _sp_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "admin" | "service_person" | "customer"
