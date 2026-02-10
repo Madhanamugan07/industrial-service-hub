@@ -2,95 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @layer base {
   :root {
-    --background: 220 20% 97%;
-    --foreground: 220 25% 10%;
+    --background: 220 16% 96%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 25% 10%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 10%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 24 95% 53%;
+    --primary: 24 95% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 215 25% 27%;
+    --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 220 15% 92%;
-    --muted-foreground: 220 10% 45%;
+    --muted: 220 14% 92%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 215 20% 93%;
-    --accent-foreground: 215 25% 27%;
+    --accent: 220 14% 94%;
+    --accent-foreground: 217 33% 17%;
 
-    --destructive: 0 72% 51%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 88%;
-    --input: 220 13% 88%;
-    --ring: 24 95% 53%;
+    --border: 220 13% 90%;
+    --input: 220 13% 90%;
+    --ring: 24 95% 50%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     /* Status colors */
-    --status-open: 0 72% 51%;
-    --status-assigned: 25 95% 53%;
-    --status-in-progress: 213 94% 50%;
-    --status-resolved: 142 71% 45%;
+    --status-open: 0 84% 60%;
+    --status-assigned: 38 92% 50%;
+    --status-in-progress: 217 91% 60%;
+    --status-resolved: 160 84% 39%;
 
     /* Industrial accent colors */
     --steel: 215 20% 65%;
-    --steel-dark: 215 25% 27%;
-    --industrial-bg: 220 20% 97%;
-    --industrial-surface: 220 15% 95%;
+    --steel-dark: 217 33% 17%;
+    --industrial-bg: 220 16% 96%;
+    --industrial-surface: 220 14% 94%;
     --warning: 45 93% 47%;
     --warning-foreground: 0 0% 100%;
 
-    --sidebar-background: 215 28% 17%;
-    --sidebar-foreground: 210 20% 85%;
-    --sidebar-primary: 24 95% 53%;
+    --sidebar-background: 222 47% 11%;
+    --sidebar-foreground: 213 31% 75%;
+    --sidebar-primary: 24 95% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 25% 22%;
+    --sidebar-accent: 217 33% 17%;
     --sidebar-accent-foreground: 210 20% 90%;
-    --sidebar-border: 215 20% 25%;
-    --sidebar-ring: 24 95% 53%;
+    --sidebar-border: 215 20% 18%;
+    --sidebar-ring: 24 95% 50%;
 
-    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
   }
 
   .dark {
-    --background: 220 25% 8%;
-    --foreground: 210 20% 90%;
-    --card: 220 25% 12%;
-    --card-foreground: 210 20% 90%;
-    --popover: 220 25% 12%;
-    --popover-foreground: 210 20% 90%;
-    --primary: 24 95% 53%;
+    --background: 222 47% 6%;
+    --foreground: 210 20% 92%;
+    --card: 222 47% 10%;
+    --card-foreground: 210 20% 92%;
+    --popover: 222 47% 10%;
+    --popover-foreground: 210 20% 92%;
+    --primary: 24 95% 50%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 215 20% 30%;
+    --secondary: 215 20% 28%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 220 15% 18%;
+    --muted: 220 15% 16%;
     --muted-foreground: 220 10% 55%;
-    --accent: 215 20% 20%;
-    --accent-foreground: 210 20% 90%;
+    --accent: 215 20% 18%;
+    --accent-foreground: 210 20% 92%;
     --destructive: 0 62% 30%;
     --destructive-foreground: 210 40% 98%;
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 24 95% 53%;
-    --sidebar-background: 220 30% 7%;
-    --sidebar-foreground: 210 20% 80%;
-    --sidebar-primary: 24 95% 53%;
+    --border: 220 15% 18%;
+    --input: 220 15% 18%;
+    --ring: 24 95% 50%;
+    --sidebar-background: 222 47% 5%;
+    --sidebar-foreground: 210 20% 75%;
+    --sidebar-primary: 24 95% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 25% 14%;
+    --sidebar-accent: 222 47% 12%;
     --sidebar-accent-foreground: 210 20% 90%;
-    --sidebar-border: 220 20% 15%;
-    --sidebar-ring: 24 95% 53%;
+    --sidebar-border: 220 20% 12%;
+    --sidebar-ring: 24 95% 50%;
   }
 }
 
@@ -100,42 +100,47 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground antialiased;
     font-family: var(--font-sans);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
+    font-family: var(--font-sans);
+    @apply font-bold tracking-tight;
   }
 }
 
 @layer components {
   .status-badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider;
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider;
   }
 
   .status-open {
-    background-color: hsl(var(--status-open) / 0.12);
+    background-color: hsl(var(--status-open) / 0.1);
     color: hsl(var(--status-open));
   }
 
   .status-assigned {
-    background-color: hsl(var(--status-assigned) / 0.12);
+    background-color: hsl(var(--status-assigned) / 0.1);
     color: hsl(var(--status-assigned));
   }
 
   .status-in-progress {
-    background-color: hsl(var(--status-in-progress) / 0.12);
+    background-color: hsl(var(--status-in-progress) / 0.1);
     color: hsl(var(--status-in-progress));
   }
 
   .status-resolved {
-    background-color: hsl(var(--status-resolved) / 0.12);
+    background-color: hsl(var(--status-resolved) / 0.1);
     color: hsl(var(--status-resolved));
   }
 
   .industrial-card {
-    @apply bg-card border border-border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200;
+    @apply bg-card border border-border rounded-xl shadow-sm transition-all duration-200;
+  }
+
+  .industrial-card:hover {
+    box-shadow: 0 4px 24px -4px hsl(var(--foreground) / 0.06);
   }
 
   .data-mono {
@@ -144,42 +149,47 @@
   }
 
   .page-header {
-    @apply flex items-center justify-between mb-6;
+    @apply flex items-center justify-between mb-8;
   }
 
   .page-title {
-    @apply text-2xl font-bold tracking-tight text-foreground;
+    @apply text-3xl font-extrabold tracking-tight text-foreground;
   }
 
   .stat-card {
-    @apply industrial-card p-6 flex flex-col gap-2;
+    @apply industrial-card p-6 flex flex-col gap-3;
   }
 
   .stat-value {
-    @apply text-3xl font-bold tracking-tight;
+    @apply text-4xl font-extrabold tracking-tight;
   }
 
   .stat-label {
-    @apply text-sm font-medium text-muted-foreground uppercase tracking-wider;
+    @apply text-xs font-semibold text-muted-foreground uppercase tracking-widest;
+  }
+
+  .glass-effect {
+    backdrop-filter: blur(12px);
+    background: hsl(var(--card) / 0.8);
   }
 }
 
 @layer utilities {
   .animate-fade-in {
-    animation: fade-in 0.3s ease-out;
+    animation: fade-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .animate-slide-up {
-    animation: slide-up 0.4s ease-out;
+    animation: slide-up 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   @keyframes fade-in {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   @keyframes slide-up {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
 }
