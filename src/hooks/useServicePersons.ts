@@ -7,6 +7,7 @@ export type ServicePerson = {
   service_person_id: string;
   name: string;
   contact_details: string | null;
+  photo_url: string | null;
   created_at: string;
 };
 

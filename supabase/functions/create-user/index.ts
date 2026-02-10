@@ -113,6 +113,7 @@ serve(async (req) => {
         name: full_name,
         service_person_id: spId,
         contact_details: service_person_details?.contact_details || null,
+        photo_url: service_person_details?.photo_url || null,
       });
       if (error) throw error;
     }

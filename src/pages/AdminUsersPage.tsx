@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useMachines } from "@/hooks/useMachines";
+import { ImageUpload } from "@/components/ImageUpload";
+import { uploadServicePersonPhoto } from "@/lib/storage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -69,6 +71,7 @@ export default function AdminUsersPage() {
     service_person_id: "",
     contact_details: "",
   });
+  const [spPhotoFile, setSpPhotoFile] = useState<File | null>(null);
 
   const { data: users = [], isLoading } = useQuery({
     queryKey: ["admin_users"],
@@ -81,7 +84,7 @@ export default function AdminUsersPage() {
     },
   });
 
-  const resetForm = () =>
+  const resetForm = () => {
     setForm({
       email: "",
       password: "",
@@ -93,6 +96,8 @@ export default function AdminUsersPage() {
       service_person_id: "",
       contact_details: "",
     });
+    setSpPhotoFile(null);
+  };
 
   const toggleMachine = (machineId: string) => {
     setForm((prev) => ({
@@ -133,9 +138,16 @@ export default function AdminUsersPage() {
           toast.error("Service Person ID is required");
           return;
         }
+        let photo_url: string | null = null;
+        if (spPhotoFile) {
+          const url = await uploadServicePersonPhoto(spPhotoFile);
+          if (url) photo_url = url;
+          else toast.error("Photo upload failed, continuing without photo");
+        }
         body.service_person_details = {
           service_person_id: form.service_person_id,
           contact_details: form.contact_details || null,
+          photo_url,
         };
       }
 
@@ -297,6 +309,10 @@ export default function AdminUsersPage() {
                       placeholder="Phone or email"
                     />
                   </div>
+                  <ImageUpload
+                    label="Service Person Photo"
+                    onChange={setSpPhotoFile}
+                  />
                 </div>
               )}
 
