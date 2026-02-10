@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Clock,
   Users,
+  TrendingUp,
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -35,8 +36,7 @@ export default function Dashboard() {
             label: "Total Machines",
             value: machines.length,
             icon: Cog,
-            color: "text-steel-dark",
-            bg: "bg-steel/10",
+            gradient: "from-secondary to-secondary/80",
           },
         ]
       : []),
@@ -44,22 +44,19 @@ export default function Dashboard() {
       label: "Open Tickets",
       value: openTickets.length,
       icon: AlertCircle,
-      color: "text-status-open",
-      bg: "bg-status-open/10",
+      gradient: "from-destructive to-destructive/80",
     },
     {
       label: "In Progress",
       value: inProgressTickets.length,
       icon: Clock,
-      color: "text-status-in-progress",
-      bg: "bg-status-in-progress/10",
+      gradient: "from-blue-500 to-blue-600",
     },
     {
       label: "Resolved",
       value: resolvedTickets.length,
       icon: CheckCircle2,
-      color: "text-status-resolved",
-      bg: "bg-status-resolved/10",
+      gradient: "from-emerald-500 to-emerald-600",
     },
   ];
 
@@ -68,7 +65,7 @@ export default function Dashboard() {
       ? "Your Service Overview"
       : role === "service_person"
         ? "Your Assigned Work"
-        : "Overview of machine maintenance & service operations";
+        : "Machine maintenance & service operations";
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -78,7 +75,7 @@ export default function Dashboard() {
       </div>
 
       {/* Stat cards */}
-      <div className={`grid grid-cols-1 sm:grid-cols-2 ${isAdmin ? "lg:grid-cols-4" : "lg:grid-cols-3"} gap-4`}>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 ${isAdmin ? "lg:grid-cols-4" : "lg:grid-cols-3"} gap-5`}>
         {stats.map((stat, i) => (
           <div
             key={i}
@@ -87,8 +84,8 @@ export default function Dashboard() {
           >
             <div className="flex items-center justify-between">
               <span className="stat-label">{stat.label}</span>
-              <div className={`rounded-lg p-2 ${stat.bg}`}>
-                <stat.icon className={`h-5 w-5 ${stat.color}`} />
+              <div className={`rounded-xl p-2.5 bg-gradient-to-br ${stat.gradient} shadow-sm`}>
+                <stat.icon className="h-4.5 w-4.5 text-white" />
               </div>
             </div>
             <span className="stat-value">{stat.value}</span>
@@ -101,31 +98,31 @@ export default function Dashboard() {
         {/* Recent tickets */}
         <div className="industrial-card">
           <div className="flex items-center justify-between border-b border-border px-6 py-4">
-            <h2 className="font-semibold text-foreground">
+            <h2 className="font-bold text-foreground">
               {role === "service_person" ? "Assigned Tickets" : "Recent Service Tickets"}
             </h2>
             <Link
               to="/tickets"
-              className="flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+              className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-primary/80 transition-colors"
             >
-              View all <ArrowRight className="h-3 w-3" />
+              View all <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
           <div className="divide-y divide-border">
             {tickets.slice(0, 5).length === 0 && (
-              <div className="px-6 py-10 text-center text-muted-foreground">
-                <Ticket className="h-8 w-8 mx-auto mb-2 opacity-40" />
-                <p className="text-sm">No tickets yet</p>
+              <div className="px-6 py-14 text-center text-muted-foreground">
+                <Ticket className="h-10 w-10 mx-auto mb-3 opacity-30" />
+                <p className="text-sm font-medium">No tickets yet</p>
               </div>
             )}
             {tickets.slice(0, 5).map((ticket) => (
               <Link
                 key={ticket.id}
                 to={`/tickets/${ticket.id}`}
-                className="flex items-center gap-4 px-6 py-3.5 hover:bg-accent/50 transition-colors"
+                className="flex items-center gap-4 px-6 py-4 hover:bg-accent/40 transition-colors"
               >
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">
+                  <p className="text-sm font-semibold truncate">
                     {ticket.problem_description}
                   </p>
                   <p className="text-xs text-muted-foreground mt-0.5">
@@ -145,8 +142,8 @@ export default function Dashboard() {
             <div className="stat-card">
               <div className="flex items-center justify-between">
                 <span className="stat-label">Total Customers</span>
-                <div className="rounded-lg p-2 bg-primary/10">
-                  <Users className="h-5 w-5 text-primary" />
+                <div className="rounded-xl p-2.5 bg-gradient-to-br from-primary to-primary/80 shadow-sm">
+                  <Users className="h-4.5 w-4.5 text-white" />
                 </div>
               </div>
               <span className="stat-value">{customers.length}</span>
@@ -154,22 +151,22 @@ export default function Dashboard() {
 
             <div className="industrial-card">
               <div className="flex items-center justify-between border-b border-border px-6 py-4">
-                <h2 className="font-semibold text-foreground">Machine Fleet</h2>
+                <h2 className="font-bold text-foreground">Machine Fleet</h2>
                 <Link
                   to="/machines"
-                  className="flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+                  className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-primary/80 transition-colors"
                 >
-                  View all <ArrowRight className="h-3 w-3" />
+                  View all <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
               <div className="divide-y divide-border">
                 {machines.slice(0, 4).map((m) => (
-                  <div key={m.id} className="flex items-center gap-4 px-6 py-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded bg-accent">
+                  <div key={m.id} className="flex items-center gap-4 px-6 py-3.5">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent">
                       <Cog className="h-4 w-4 text-accent-foreground" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium">{m.machine_name}</p>
+                      <p className="text-sm font-semibold">{m.machine_name}</p>
                       <p className="text-xs text-muted-foreground font-mono">
                         {m.machine_id}
                       </p>
