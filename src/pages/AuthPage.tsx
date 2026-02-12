@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Cog, LogIn, Shield } from "lucide-react";
+import { Activity, LogIn, Shield } from "lucide-react";
 import { toast } from "sonner";
 
 export default function AuthPage() {
@@ -73,91 +73,87 @@ export default function AuthPage() {
   if (loading) return null;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      {/* Decorative background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-1/2 -right-1/2 w-full h-full rounded-full bg-primary/3 blur-3xl" />
-        <div className="absolute -bottom-1/2 -left-1/2 w-full h-full rounded-full bg-secondary/5 blur-3xl" />
-      </div>
+    <div className="min-h-screen flex items-center justify-center bg-background p-4 tech-grid">
+      {/* Subtle gradient overlay */}
+      <div className="fixed inset-0 pointer-events-none bg-gradient-to-br from-primary/3 via-transparent to-neon/3" />
 
-      <div className="w-full max-w-md animate-fade-in relative z-10">
+      <div className="w-full max-w-sm animate-fade-in relative z-10">
         {/* Logo */}
-        <div className="flex items-center gap-3.5 justify-center mb-10">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-xl shadow-primary/20">
-            <Cog className="h-8 w-8 text-primary-foreground" />
+        <div className="flex items-center gap-2.5 justify-center mb-8">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+            <Activity className="h-5 w-5 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-2xl font-extrabold text-foreground tracking-tight">MaintainX</h1>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-medium">
-              Service Manager
+            <h1 className="text-xl font-extrabold text-foreground tracking-tight leading-none">MaintainX</h1>
+            <p className="text-[9px] uppercase tracking-[0.2em] text-muted-foreground font-medium mt-0.5">
+              Industrial OS
             </p>
           </div>
         </div>
 
-        <div className="industrial-card p-8 space-y-6">
+        <div className="industrial-card p-6 space-y-5">
           {!setupMode ? (
             <>
-              <div className="text-center">
-                <h2 className="text-xl font-bold">Welcome back</h2>
-                <p className="text-sm text-muted-foreground mt-1.5">
-                  Sign in to your account to continue
+              <div>
+                <h2 className="text-lg font-bold">Sign in</h2>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Access your service operations dashboard
                 </p>
               </div>
-              <form onSubmit={handleLogin} className="space-y-5">
-                <div className="space-y-2">
-                  <Label className="text-xs font-semibold uppercase tracking-wider">Email</Label>
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div className="space-y-1.5">
+                  <Label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Email</Label>
                   <Input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     placeholder="your@email.com"
-                    className="h-11 rounded-xl"
+                    className="h-10"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-semibold uppercase tracking-wider">Password</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Password</Label>
                   <Input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     placeholder="••••••••"
-                    className="h-11 rounded-xl"
+                    className="h-10"
                   />
                 </div>
-                <Button type="submit" className="w-full h-11 rounded-xl font-semibold shadow-md shadow-primary/15" disabled={submitting}>
+                <Button type="submit" className="w-full h-10 font-semibold text-sm" disabled={submitting}>
                   <LogIn className="h-4 w-4 mr-2" />
                   {submitting ? "Signing in..." : "Sign In"}
                 </Button>
               </form>
               {needsSetup && (
-                <div className="border-t border-border pt-5 text-center">
-                  <p className="text-xs text-muted-foreground mb-3">
+                <div className="border-t border-border pt-4 text-center">
+                  <p className="text-[11px] text-muted-foreground mb-2.5">
                     No admin account found
                   </p>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="rounded-xl"
                     onClick={() => setSetupMode(true)}
                   >
-                    <Shield className="h-4 w-4 mr-2" /> Setup Admin Account
+                    <Shield className="h-3.5 w-3.5 mr-1.5" /> Setup Admin
                   </Button>
                 </div>
               )}
             </>
           ) : (
             <>
-              <div className="text-center">
-                <h2 className="text-xl font-bold">Setup Admin Account</h2>
-                <p className="text-sm text-muted-foreground mt-1.5">
-                  Create the first admin to get started
+              <div>
+                <h2 className="text-lg font-bold">Setup Admin</h2>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Create the first admin account
                 </p>
               </div>
-              <form onSubmit={handleBootstrap} className="space-y-5">
-                <div className="space-y-2">
-                  <Label className="text-xs font-semibold uppercase tracking-wider">Full Name</Label>
+              <form onSubmit={handleBootstrap} className="space-y-4">
+                <div className="space-y-1.5">
+                  <Label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Full Name</Label>
                   <Input
                     value={setupForm.full_name}
                     onChange={(e) =>
@@ -165,11 +161,11 @@ export default function AuthPage() {
                     }
                     required
                     placeholder="Admin Name"
-                    className="h-11 rounded-xl"
+                    className="h-10"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-semibold uppercase tracking-wider">Email</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Email</Label>
                   <Input
                     type="email"
                     value={setupForm.email}
@@ -178,11 +174,11 @@ export default function AuthPage() {
                     }
                     required
                     placeholder="admin@company.com"
-                    className="h-11 rounded-xl"
+                    className="h-10"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-semibold uppercase tracking-wider">Password</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Password</Label>
                   <Input
                     type="password"
                     value={setupForm.password}
@@ -192,16 +188,16 @@ export default function AuthPage() {
                     required
                     minLength={6}
                     placeholder="Min 6 characters"
-                    className="h-11 rounded-xl"
+                    className="h-10"
                   />
                 </div>
-                <Button type="submit" className="w-full h-11 rounded-xl font-semibold shadow-md shadow-primary/15" disabled={submitting}>
+                <Button type="submit" className="w-full h-10 font-semibold text-sm" disabled={submitting}>
                   {submitting ? "Creating..." : "Create Admin Account"}
                 </Button>
                 <Button
                   type="button"
                   variant="ghost"
-                  className="w-full rounded-xl"
+                  className="w-full text-sm"
                   onClick={() => setSetupMode(false)}
                 >
                   Back to Login
@@ -211,8 +207,8 @@ export default function AuthPage() {
           )}
         </div>
 
-        <p className="text-center text-xs text-muted-foreground/50 mt-6">
-          © {new Date().getFullYear()} MaintainX Service Manager
+        <p className="text-center text-[10px] text-muted-foreground/40 mt-5 font-mono tracking-wider">
+          © {new Date().getFullYear()} MAINTAINX
         </p>
       </div>
     </div>
