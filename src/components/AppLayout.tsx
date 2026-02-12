@@ -10,7 +10,7 @@ import {
   X,
   LogOut,
   Shield,
-  ChevronRight,
+  Activity,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -59,7 +59,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-foreground/30 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-foreground/20 backdrop-blur-sm lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -67,30 +67,30 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-[280px] flex-col bg-sidebar text-sidebar-foreground transition-transform duration-300 lg:relative lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-50 flex w-[260px] flex-col bg-sidebar text-sidebar-foreground transition-transform duration-300 lg:relative lg:translate-x-0 border-r border-sidebar-border",
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
         {/* Logo */}
-        <div className="flex h-20 items-center gap-3.5 border-b border-sidebar-border px-6">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80 shadow-lg shadow-primary/20">
-            <Cog className="h-5 w-5 text-primary-foreground" />
+        <div className="flex h-16 items-center gap-3 border-b border-sidebar-border px-5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">
+            <Activity className="h-4 w-4 text-primary-foreground" />
           </div>
-          <div>
-            <h1 className="text-base font-extrabold text-white tracking-tight">MaintainX</h1>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-sidebar-foreground/50 font-medium">Service Manager</p>
+          <div className="flex flex-col">
+            <h1 className="text-sm font-bold text-white tracking-tight leading-none">MaintainX</h1>
+            <p className="text-[9px] uppercase tracking-[0.2em] text-sidebar-foreground/40 font-medium mt-0.5">Industrial OS</p>
           </div>
           <button
             onClick={() => setSidebarOpen(false)}
-            className="ml-auto rounded-lg p-1.5 text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-accent lg:hidden transition-colors"
+            className="ml-auto rounded p-1 text-sidebar-foreground/40 hover:text-sidebar-foreground hover:bg-sidebar-accent lg:hidden transition-colors"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </button>
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 space-y-1 px-4 py-6">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-sidebar-foreground/40 font-semibold px-3 mb-3">Navigation</p>
+        <nav className="flex-1 px-3 py-4 space-y-0.5">
+          <p className="text-[9px] uppercase tracking-[0.18em] text-sidebar-foreground/30 font-semibold px-3 mb-2">Menu</p>
           {navItems.map((item) => {
             const isActive =
               item.path === "/"
@@ -102,33 +102,33 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 to={item.path}
                 onClick={() => setSidebarOpen(false)}
                 className={cn(
-                  "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                  "group flex items-center gap-2.5 rounded-md px-3 py-2 text-[13px] font-medium transition-all duration-150",
                   isActive
-                    ? "bg-gradient-to-r from-sidebar-primary to-sidebar-primary/90 text-sidebar-primary-foreground shadow-md shadow-primary/15"
-                    : "text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                    ? "bg-primary/15 text-white border-l-2 border-primary"
+                    : "text-sidebar-foreground/50 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground border-l-2 border-transparent"
                 )}
               >
-                <item.icon className={cn("h-[18px] w-[18px]", isActive ? "" : "text-sidebar-foreground/40 group-hover:text-sidebar-foreground/70")} />
-                <span className="flex-1">{item.title}</span>
-                {isActive && <ChevronRight className="h-3.5 w-3.5 opacity-60" />}
+                <item.icon className={cn("h-4 w-4", isActive ? "text-primary" : "text-sidebar-foreground/35 group-hover:text-sidebar-foreground/60")} />
+                <span>{item.title}</span>
+                {isActive && <div className="ml-auto h-1.5 w-1.5 rounded-full bg-primary indicator-dot" />}
               </Link>
             );
           })}
         </nav>
 
-        {/* Footer with user + logout */}
-        <div className="border-t border-sidebar-border px-5 py-5 space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-sidebar-primary/30 to-sidebar-primary/10 flex items-center justify-center">
-              <span className="text-xs font-bold text-sidebar-primary">
+        {/* Footer */}
+        <div className="border-t border-sidebar-border px-4 py-4 space-y-3">
+          <div className="flex items-center gap-2.5">
+            <div className="h-8 w-8 rounded-md bg-sidebar-accent flex items-center justify-center">
+              <span className="text-[11px] font-bold text-primary">
                 {user?.email?.charAt(0).toUpperCase() || "U"}
               </span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-white truncate">
+              <p className="text-[11px] font-semibold text-white/80 truncate">
                 {user?.email}
               </p>
-              <p className="text-[10px] uppercase tracking-widest text-sidebar-foreground/40 font-medium">
+              <p className="text-[9px] uppercase tracking-widest text-sidebar-foreground/30 font-medium">
                 {roleLabels[role || ""] || "User"}
               </p>
             </div>
@@ -136,10 +136,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <Button
             variant="ghost"
             size="sm"
-            className="w-full justify-start text-sidebar-foreground/50 hover:text-white hover:bg-sidebar-accent rounded-xl"
+            className="w-full justify-start text-sidebar-foreground/40 hover:text-white hover:bg-sidebar-accent rounded-md text-xs h-8"
             onClick={signOut}
           >
-            <LogOut className="h-4 w-4 mr-2" /> Sign Out
+            <LogOut className="h-3.5 w-3.5 mr-2" /> Sign Out
           </Button>
         </div>
       </aside>
@@ -147,23 +147,28 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       {/* Main content */}
       <div className="flex flex-1 flex-col overflow-hidden">
         {/* Top bar */}
-        <header className="flex h-16 items-center gap-4 border-b border-border bg-card/80 backdrop-blur-sm px-4 lg:px-8">
+        <header className="flex h-14 items-center gap-4 border-b border-border bg-card px-4 lg:px-8">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="rounded-xl p-2 text-muted-foreground hover:bg-accent hover:text-foreground lg:hidden transition-colors"
+            className="rounded-md p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground lg:hidden transition-colors"
           >
             <Menu className="h-5 w-5" />
           </button>
           <div className="flex-1" />
           <div className="flex items-center gap-3">
-            <span className="text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full bg-primary/8 text-primary border border-primary/15">
+            <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
+              <div className="h-1.5 w-1.5 rounded-full bg-status-resolved indicator-dot" />
+              <span className="font-medium">System Online</span>
+            </div>
+            <div className="h-4 w-px bg-border hidden sm:block" />
+            <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-primary/8 text-primary border border-primary/15 font-mono">
               {roleLabels[role || ""] || "User"}
             </span>
           </div>
         </header>
 
         {/* Page content */}
-        <main className="flex-1 overflow-auto p-5 lg:p-10">
+        <main className="flex-1 overflow-auto p-5 lg:p-8">
           {children}
         </main>
       </div>
